@@ -4,10 +4,7 @@ from heapq import heappop,heappush
 n,m,k,c= map(int,sys.stdin.readline().split())
 board = [list(map(int,sys.stdin.readline().strip().split())) for x in range(n)]
 
-herb = [
-    [0] * (n )
-    for _ in range(n)
-]
+herb = [[0] * (n ) for _ in range(n)]
 a,b = len(board), len(board[0])
 
 ans = 0
@@ -58,8 +55,7 @@ def step_three(a,b):
     max_del, max_x, max_y = 0, 0 , 0 
     for i in range(0, n):
         for j in range(0, n):
-            # 모든 칸에 대해 제초제를 뿌려봅니다. 각 칸에서 제초제를 뿌릴 시 박멸되는 나무의 그루 수를 계산하고,
-            # 이 값이 최대가 되는 지점을 찾아줍니다.
+            
             if board[i][j] <= 0: 
                 continue
             cnt = board[i][j]
@@ -80,7 +76,7 @@ def step_three(a,b):
 
     ans += max_del
 
-    # 찾은 칸에 제초제를 뿌립니다.
+    # 찾은 칸에 제초제
     if board[max_x][max_y] > 0:
         board[max_x][max_y] = 0
         herb[max_x][max_y] = c
@@ -109,11 +105,11 @@ def delete_herb():
             if herb[i][j] > 0: 
                 herb[i][j] -= 1
 
-tree_grow(a,b)
-step_three(a,b)
-delete_herb()
+# tree_grow(a,b)
+# step_three(a,b)
+# delete_herb()
 
-for _ in range(m-1):
+for _ in range(m):
     # 1단계 : 인접한 네 개의 칸 중 나무가 있는 칸의 수만큼 나무가 성장합니다.
     tree_grow(a,b)
 
