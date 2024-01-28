@@ -109,8 +109,11 @@ def delete_herb():
             if herb[i][j] > 0: 
                 herb[i][j] -= 1
 
+tree_grow(a,b)
+step_three(a,b)
+delete_herb()
 
-for _ in range(m):
+for _ in range(m-1):
     # 1단계 : 인접한 네 개의 칸 중 나무가 있는 칸의 수만큼 나무가 성장합니다.
     tree_grow(a,b)
 
