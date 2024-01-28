@@ -33,14 +33,14 @@ def tree_grow(a,b):
                 elif board[nx][ny]==0:
                     update2[(c,d)].append([nx,ny])
         ## 나무 번식 메커니즘
-        if update:
-            for key in update:
-                x,y = key
-                board[x][y]+= update[(x,y)]
-                if update2[(x,y)]:
-                    spride = board[x][y]//len(update2[(x,y)])
-                    for i,j in update2[(x,y)]:
-                        update_stack[(i,j)] += spride
+        # if update:
+        for key in update:
+            x,y = key
+            board[x][y]+= update[(x,y)]
+            if update2[(x,y)]:
+                spride = board[x][y]//len(update2[(x,y)])
+                for i,j in update2[(x,y)]:
+                    update_stack[(i,j)] += spride
     for key in update_stack:
         x,y  = key
         board[x][y] += update_stack[key]
@@ -75,7 +75,7 @@ def step_three(a,b):
                 max_y = j
 
     ans += max_del
-
+    # print(max_x,max_y)
     # 찾은 칸에 제초제
     if board[max_x][max_y] > 0:
         board[max_x][max_y] = 0
