@@ -16,35 +16,34 @@ def tree_grow(a,b):
     goto = [[0,1],[1,0],[-1,0],[0,-1]]
    
     update_stack = defaultdict(int)
-
+    stack= []
     for j in range(a):
         for i in range(b):
             if board[i][j]>=1:
-                stack= []
                 stack.append([i,j])
-                while stack:
-                    c,d = stack.pop()
-                    # 4방향 살핀후
-                    update = defaultdict(int)
-                    update2 = defaultdict(list)
-                    ## 나무 1년치 성장
-                    for x,y in goto:
-                        nx,ny  = c+x,d+y
-                        if 0<=nx< a and 0<=ny< b :
-                            # 나무가 있는 것
-                            if board[nx][ny]>=1:
-                                update[(c,d)]+=1
-                            elif board[nx][ny]==0:
-                                update2[(c,d)].append([nx,ny])
-                    ## 나무 번식 메커니즘
-                    if update:
-                        for key in update:
-                            x,y = key
-                            board[x][y]+= update[(x,y)]
-                            if update2[(x,y)]:
-                                spride = board[x][y]//len(update2[(x,y)])
-                                for i,j in update2[(x,y)]:
-                                    update_stack[(i,j)] += spride
+    while stack:
+        c,d = stack.pop()
+        # 4방향 살핀후
+        update = defaultdict(int)
+        update2 = defaultdict(list)
+        ## 나무 1년치 성장
+        for x,y in goto:
+            nx,ny  = c+x,d+y
+            if 0<=nx< a and 0<=ny< b :
+                # 나무가 있는 것
+                if board[nx][ny]>=1:
+                    update[(c,d)]+=1
+                elif board[nx][ny]==0:
+                    update2[(c,d)].append([nx,ny])
+        ## 나무 번식 메커니즘
+        if update:
+            for key in update:
+                x,y = key
+                board[x][y]+= update[(x,y)]
+                if update2[(x,y)]:
+                    spride = board[x][y]//len(update2[(x,y)])
+                    for i,j in update2[(x,y)]:
+                        update_stack[(i,j)] += spride
     for key in update_stack:
         x,y  = key
         board[x][y] += update_stack[key]
