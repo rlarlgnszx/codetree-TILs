@@ -56,14 +56,13 @@ def step_three(a,b):
 
     dxs, dys = [-1, 1, 1, -1], [-1, -1, 1, 1]
 
-    max_del, max_x, max_y = 0, 1, 1
+    max_del, max_x, max_y = 0, 0,0
     for i in range(0, n):
         for j in range(0, n):
             # 모든 칸에 대해 제초제를 뿌려봅니다. 각 칸에서 제초제를 뿌릴 시 박멸되는 나무의 그루 수를 계산하고,
             # 이 값이 최대가 되는 지점을 찾아줍니다.
             if board[i][j] <= 0: 
                 continue
-
             cnt = board[i][j]
             for dx, dy in zip(dxs, dys):
                 nx, ny = i, j
