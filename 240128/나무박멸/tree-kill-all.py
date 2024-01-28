@@ -56,7 +56,7 @@ def step_three(a,b):
 
     dxs, dys = [-1, 1, 1, -1], [-1, -1, 1, 1]
 
-    max_del, max_x, max_y = 0, 0,0
+    max_del, max_x, max_y = 0, 0 , 0 
     for i in range(0, n):
         for j in range(0, n):
             # 모든 칸에 대해 제초제를 뿌려봅니다. 각 칸에서 제초제를 뿌릴 시 박멸되는 나무의 그루 수를 계산하고,
@@ -101,14 +101,14 @@ def step_three(a,b):
                 board[nx][ny] = 0
                 herb[nx][ny] = c
 
+
 # step_three(a,b)
 
 def delete_herb():
-    for i in range(n ):
-        for j in range( n ): 
+    for i in range(n):
+        for j in range(n): 
             if herb[i][j] > 0: 
                 herb[i][j] -= 1
-
 
 
 for _ in range(m):
