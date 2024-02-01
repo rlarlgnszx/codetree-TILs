@@ -45,7 +45,7 @@ def bfs(start,end):
         k = stack.popleft()
         x,y,c = k
         for i,(a,b) in enumerate(goto):
-            if 0<=a+x<n and 0<=b+y<n and board[a+x][b+y]!=-1 and (a+x,y+b) not in visited:
+            if 0<=a+x<n and 0<=b+y<n and board[a+x][b+y]!=-1 and ((a+x,y+b) not in visited):
                 visited.add((a+x,y+b))
                 if one_count:
                     stack.append([a+x,b+y,c])
@@ -73,9 +73,8 @@ for i in range(m):
         if not check:
             moving_person[key]=[x,y,True]
             continue
-        # print(f"START: {[x,y]} => {[c,d]}")
         cango = bfs([x,y],[c,d])
-        # print(f"FINDPATH = {goto[cango]}")
+        
         if cango==0:
             moving_person[key]= [x-1,y,True]
         elif cango==1:
@@ -85,13 +84,13 @@ for i in range(m):
         elif cango==3:
             moving_person[key] = [x+1,y,True]
         ## 도착했을시 pop
+
         if moving_person[key][:2]==[c,d]:
-            board[x][y]=-1
             del_key.append(key)
         
     for key in del_key:
+        board[key[0]][key[1]]=-1
         del moving_person[key]
-    # ans +=1
 
 while moving_person:
     ans +=1
