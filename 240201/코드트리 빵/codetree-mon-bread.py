@@ -17,7 +17,7 @@ for i in range(n):
     for j in range(n):
         if board[i][j]==1:
             base_camp.add((i,j))
-moving_person = []
+moving_person = {}
 ## 최단거리구하기
 def find_basecamp(i):
     x,y = None,None
@@ -32,7 +32,7 @@ def find_basecamp(i):
             min_lenghth = abs(a-c)+abs(b-d)
             count = i
     board[x][y]=-1
-    moving_person.append([x,y])
+    moving_person[(c,d)] = [x,y]
     base_camp.remove((x,y))
 
 
@@ -48,60 +48,76 @@ def bfs(start,end):
         for i,(a,b) in enumerate(goto):
             if 0<=a+x<n and 0<=b+y<n and board[a+x][b+y]!=-1 and (a+x,y+b) not in visited:
                 visited.add((a+x,y+b))
-                if a+x==fx and b+y==fy:
-                    return c
                 if one_count:
                     stack.append([a+x,b+y,c])
                 else:
                     stack.append([a+x,b+y,i])
+                if a+x==fx and b+y==fy:
+                    if c==-1:
+                        return i
+                    return c
         one_count =True
-    
+
 ans = m
 
 for i in range(m):
     find_basecamp(i)
     len2  = len(moving_person)
-    print("START:",moving_person)
-    for i in range(len2):
-        x,y = moving_person[i]
-        c,d = store[i]
-        print(store[i])
-        c-=1
-        d-=1
-
-        cango = bfs(moving_person[i],[c,d])
+    # print("MOVING PERSON",moving_person)
+    del_key = []
+    for key in moving_person:
+        c,d = key # store값
+        x,y = moving_person[key]
+        # c-=1
+        # d-=1
+        # print(f"START: {[x,y]} => {[c,d]}")
+        
+        cango = bfs([x,y],[c,d])
+        # print(f"FINDPATH = {goto[cango]}")
         if cango==0:
-            moving_person[i]= [x-1,y]
+            moving_person[key]= [x-1,y]
         elif cango==1:
-            moving_person[i]= [x,y-1]
+            moving_person[key]= [x,y-1]
         elif cango==2:
-            moving_person[i]= [x,y+1]
+            moving_person[key]= [x,y+1]
         elif cango==3:
-            moving_person[i]= [x+1,y]
+            moving_person[key] = [x+1,y]
         ## 도착했을시 pop
-        print(moving_person)
-        if moving_person[i]==[c,d]:
+        # print(f"MOVE FINAL:",moving_person[key])
+        if moving_person[key]==[c,d]:
             board[x][y]=-1
-            store.pop(i)
-            moving_person.pop(i)
-print(moving_person)
+            del_key.append(key)
+    for key in del_key:
+        del moving_person[key]
 
 
-# while moving_person:
-#     # one_minute_move_person()
-#     ans+=1
-#     for i in range(len2):
-#         cango = bfs(moving_person[i],store[i])
-#         if cango==0:
-#             moving_person[i]= [moving_person[i][0]-1,moving_person[i][1]]
-#         elif cango==1:
-#             moving_person[i]= [moving_person[i][0],moving_person[i][1]-1]
-#         elif cango==2:
-#             moving_person[i]= [moving_person[i][0],moving_person[i][1]+1]
-#         elif cango==3:
-#             moving_person[i]= [moving_person[i][0]+1,moving_person[i][1]]
-#         if moving_person[i]==store[i]:
-#             board[moving_person[i][0]][moving_person[i][1]]=-1
-#             store.pop(i)
-#             moving_person.pop(i)
-# print(ans)
+ans +=1
+while moving_person:
+    # one_minute_move_person()
+    
+    len2  = len(moving_person)
+    # print("MOVING PERSON",moving_person)
+    del_key = []
+    for key in moving_person:
+        c,d = key # store값
+        x,y = moving_person[key]
+        # print(f"START: {[x,y]} => {[c,d]}")
+        cango = bfs([x,y],[c,d])
+        # print(f"FINDPATH = {goto[cango]}")
+        if cango==0:
+            moving_person[key]= [x-1,y]
+        elif cango==1:
+            moving_person[key]= [x,y-1]
+        elif cango==2:
+            moving_person[key]= [x,y+1]
+        elif cango==3:
+            moving_person[key] = [x+1,y]
+        ## 도착했을시 pop
+        # print(f"MOVE FINAL:",moving_person[key])
+        if moving_person[key]==[c,d]:
+            board[x][y]=-1
+            del_key.append(key)
+    for key in del_key:
+        del moving_person[key]
+    ans+=1
+print(ans)
