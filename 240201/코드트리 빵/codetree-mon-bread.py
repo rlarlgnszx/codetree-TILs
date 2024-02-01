@@ -57,7 +57,6 @@ def bfs(start,end):
                         return i
                     return c
         one_count =True
-
 ans = m
 
 for i in range(m):
@@ -94,7 +93,7 @@ for i in range(m):
 ans +=1
 while moving_person:
     # one_minute_move_person()
-    
+    ans+=1
     len2  = len(moving_person)
     # print("MOVING PERSON",moving_person)
     del_key = []
@@ -119,5 +118,4 @@ while moving_person:
             del_key.append(key)
     for key in del_key:
         del moving_person[key]
-    ans+=1
 print(ans)
