@@ -32,9 +32,8 @@ def find_basecamp(i):
             min_lenghth = abs(a-c)+abs(b-d)
             count = i
     board[x][y]=-1
-    moving_person[(c,d)] = [x,y]
+    moving_person[(c,d)] = [x,y,False]
     base_camp.remove((x,y))
-
 
 def bfs(start,end):
     visited= set()
@@ -57,65 +56,67 @@ def bfs(start,end):
                         return i
                     return c
         one_count =True
-ans = m
-
+ans = 0
 for i in range(m):
+    ans +=1
     find_basecamp(i)
     len2  = len(moving_person)
     # print("MOVING PERSON",moving_person)
     del_key = []
     for key in moving_person:
         c,d = key # store값
-        x,y = moving_person[key]
-        # c-=1
-        # d-=1
+        x,y,check = moving_person[key]
+        if check:
         # print(f"START: {[x,y]} => {[c,d]}")
-        
-        cango = bfs([x,y],[c,d])
-        # print(f"FINDPATH = {goto[cango]}")
-        if cango==0:
-            moving_person[key]= [x-1,y]
-        elif cango==1:
-            moving_person[key]= [x,y-1]
-        elif cango==2:
-            moving_person[key]= [x,y+1]
-        elif cango==3:
-            moving_person[key] = [x+1,y]
-        ## 도착했을시 pop
-        # print(f"MOVE FINAL:",moving_person[key])
-        if moving_person[key]==[c,d]:
-            board[x][y]=-1
-            del_key.append(key)
+            cango = bfs([x,y],[c,d])
+            # print(f"FINDPATH = {goto[cango]}")
+            if cango==0:
+                moving_person[key]= [x-1,y,True]
+            elif cango==1:
+                moving_person[key]= [x,y-1,True]
+            elif cango==2:
+                moving_person[key]= [x,y+1,True]
+            elif cango==3:
+                moving_person[key] = [x+1,y,True]
+            ## 도착했을시 pop
+            # print(f"MOVE FINAL:",moving_person[key])
+            if moving_person[key][:2]==[c,d]:
+                board[x][y]=-1
+                del_key.append(key)
+        else:
+            moving_person[key]=[x,y,True]
     for key in del_key:
         del moving_person[key]
 
-
 ans +=1
 while moving_person:
-    # one_minute_move_person()
-    ans+=1
+    ans +=1
     len2  = len(moving_person)
     # print("MOVING PERSON",moving_person)
     del_key = []
     for key in moving_person:
         c,d = key # store값
-        x,y = moving_person[key]
+        x,y,check = moving_person[key]
+        if check:
         # print(f"START: {[x,y]} => {[c,d]}")
-        cango = bfs([x,y],[c,d])
-        # print(f"FINDPATH = {goto[cango]}")
-        if cango==0:
-            moving_person[key]= [x-1,y]
-        elif cango==1:
-            moving_person[key]= [x,y-1]
-        elif cango==2:
-            moving_person[key]= [x,y+1]
-        elif cango==3:
-            moving_person[key] = [x+1,y]
-        ## 도착했을시 pop
-        # print(f"MOVE FINAL:",moving_person[key])
-        if moving_person[key]==[c,d]:
-            board[x][y]=-1
-            del_key.append(key)
+            cango = bfs([x,y],[c,d])
+            # print(f"FINDPATH = {goto[cango]}")
+            if cango==0:
+                moving_person[key]= [x-1,y,True]
+            elif cango==1:
+                moving_person[key]= [x,y-1,True]
+            elif cango==2:
+                moving_person[key]= [x,y+1,True]
+            elif cango==3:
+                moving_person[key] = [x+1,y,True]
+            ## 도착했을시 pop
+            # print(f"MOVE FINAL:",moving_person[key])
+            if moving_person[key][:2]==[c,d]:
+                board[x][y]=-1
+                del_key.append(key)
+        else:
+            moving_person[key]=[x,y,True]
     for key in del_key:
         del moving_person[key]
+
 print(ans)
