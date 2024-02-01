@@ -56,13 +56,14 @@ def bfs(start,end):
                         return i
                     return c
         one_count =True
-ans = 1
+ans = 0
 for i in range(m):
+    ans +=1
     find_basecamp(i)
     len2  = len(moving_person)
     # print("MOVING PERSON",moving_person)
     del_key = []
-    # print(moving_person)
+    # print(ans , " : ",moving_person)
 
     for key in moving_person:
         # print(f"MOVE FINAL:",moving_person[key])
@@ -90,12 +91,13 @@ for i in range(m):
         
     for key in del_key:
         del moving_person[key]
-    ans +=1
+    # ans +=1
 
 while moving_person:
+    ans +=1
     len2  = len(moving_person)
     del_key = []
-    # print(moving_person)
+    # print(ans , " : ",moving_person)
     for key in moving_person:
         # print(f"MOVE FINAL:",moving_person[key])
         c,d = key # store값
@@ -122,5 +124,5 @@ while moving_person:
         
     for key in del_key:
         del moving_person[key]
-    ans +=1
+    # ans +=1
 print(ans)
