@@ -8,7 +8,7 @@ temp.sort(key=lambda x:x[1])
 ans = 0
 ticket = 1
 for a,b in temp:
-    if k-(a+b) <0 and ticket:
+    if k-(a+b) < 0 and ticket:
         ticket-=1
         if k-(a//2)-b >=0:
             ans+=1
